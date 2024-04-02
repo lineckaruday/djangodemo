@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}              <!--always add load static after extends page---->
+
+{% block title%}
+Category
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid mt-4" style="margin-bottom:100px">
+
+    <center>
+    {% if user.is_authenticated %}          <!--here if user login or when user is login succesfully so enters into if-->
+    <h1>Hey ,<span style="color:red; font-size:55px;">{{user.username}}</span></h1>      <!-- that login user username is shown here -->
+    {% else %}
+    <h1>Guest</h1>
+    {% endif %}
+</center>
+    <br>
+
+    <img src="{% static 'images/banner image3.jpg' %}" height="500px" width="100%">
+
+</div>
+
+
+<div class="container-fluid" style="margin-bottom:100px">
+    <h3 class="text-center text-black fw-bold">Our Collections</h3>
+    <p style="text-align:justify;line-height:2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s  when an unknown printer took a galley of type and scrambled it to make a type
+    specimen book. It has survived not only five centuries, but also the leap into
+    electronic typesetting, remaining essentially unchanged. It was popularised in
+    the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+    and more recently with desktop publishing software like Aldus PageMaker including
+    versions of Lorem Ipsum.</p>
+</div>
+
+<div class="container-fluid" style="margin-bottom:100px">
+    <div class="row">
+
+        {% for i in c %}
+            <div class="col-sm-3 m-2 " style="height:px; width:350px;" >
+            <div class="card m-5" style="width: 18rem;">
+  <img src="{{i.image.url}}" height="200px" width="100%" class="card-img-top" alt="...">
+  <div class="card-body" style="background-color:#e3f2fd">
+    <h4 class="card-title">{{i.name}}</h4>
+       <h5 class="card-title" style="font-size:15px">{{i.desc}}</h5>
+
+    <a href="{% url 'shop:products' i.id %}" class="btn btn-primary">View Detail</a>
+  </div>
+</div>
+        </div>
+{% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

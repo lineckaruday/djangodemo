@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}              <!--always add load static after extends page---->
+
+{% block title%}
+Cart
+{% endblock %}
+
+{% block content %}
+
+<center>
+    {% if user.is_authenticated %}          <!--here if user login or when user is login succesfully so enters into if-->
+    <h4>{{user.username}}</h4>      <!-- that login user username is shown here -->
+    {% else %}
+    <h4>Guest</h4>
+    {% endif %}
+</center>
+
+
+<div class="container-fluid mt-5" style="margin-bottom:100px;">
+    <div class="row">
+        <h3 class="text-center text-dark">Shopping Cart</h3>
+        <div class="col-7">
+            <table class="table table-bordered">
+                <tr>
+                    <th class="text-center fw-bold fs-3" colspan="6">Cart Items</th>
+                </tr>
+
+                {% for i in c %}
+                <tr>
+                    <td><img src="{{i.product.image.url}}" height="150px" width="150px"></td>
+                    <td><b>{{i.product.name}}</b></td>
+                    <td><b>Product ID : {{i.product.id}}</b><br>
+                      <b>Quantity : {{i.quantity}}</b><br>
+                        <b>Unit Price : {{i.quantity}}*{{i.product.price}}</b><br>
+
+
+                    </td>
+                     <td>Sub Total : {{i.subtotal}}</td>    <!--(i.subtotal) here subtotal is a func declared in Cart model class so it is called from here to get the subtotal-->
+
+                      <td>
+                      {% if i.product.stock > 0 %}   <!--here condition given to check whethet Product stock is greater than 0 then only add button necessary-->
+
+                    <a href="{% url 'cart:addtocart'  i.product.id  %}" ><i class="fa-solid fa-circle-plus" style="color:blue; font-size:25px;"></i></a>
+                        <a href="{% url 'cart:cart_remove'  i.product.id  %}" ><i class="fa-solid fa-circle-minus" style="color:blue; font-size:25px;"></i></a>
+                        <a href="{% url 'cart:full_remove'  i.product.id  %}" ><i class="fa-solid fa-trash" style="color:red; font-size:25px;"></i></a>
+
+                        {% else %}    <!-- here in else condition Product stock is less than zero so it wont show add button button shows minus and trash-->
+
+                        <a href="{% url 'cart:cart_remove'  i.product.id  %}" ><i class="fa-solid fa-circle-minus" style="color:blue; font-size:25px;"></i></a>
+                        <a href="{% url 'cart:full_remove'  i.product.id  %}" ><i class="fa-solid fa-trash" style="color:red; font-size:25px;"></i></a>
+
+                        {% endif %}
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+        <div class="col-4" style="position:relative;">
+            <table class="table table-bordered">
+                <tr>
+                    <th colspan="4" class="text-center fw-bold fs-3">Check Out</th>
+                </tr>
+
+                <tr>
+                    <td colspan="4">TOTAL AMOUNT : {{total}}</td>
+                </tr>
+            </table>
+
+            <a class="btn btn-secondary" href="{% url 'shop:allcat' %}" style="position:absolute; right:0;">Continue Shoping</a>
+                        <a class="btn btn-secondary" href="{% url 'cart:orderform' %}" style="position:absolute; left:0;">Place Order</a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

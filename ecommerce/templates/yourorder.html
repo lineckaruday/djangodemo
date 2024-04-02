@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}              <!--always add load static after extends page---->
+
+{% block title%}
+your Order
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid mt-4" style="margin-bottom:100px">
+
+
+    {% if user.is_authenticated %}          <!--here if user login or when user is login succesfully so enters into if-->
+    <h3>Name of the Customer : <span style="color:red; font-size:30px;">{{user.username}}</span></h3>      <!-- that login user username is shown here -->
+    {% else %}
+    <h1>Guest</h1>
+    {% endif %}
+
+     <table class="table table-bordered">
+
+     {% for i in o %}
+                <tr>
+                    <td><img src="{{i.product.image.url}}" height="150px" width="150px"></td>
+                    <td>Product name : <span style="color:red">{{i.product.name}}</span></td>
+                    <td>Product price : <span style="color:red">{{i.product.price}}</span></td>
+                    <td>Delivery address : <span style="color:red">{{i.address}}</span></td>
+                    <td>Phone number : <span style="color:red">{{i.phone}}</span></td>
+                    <td>No items : <span style="color:red">{{i.no_of_items}}</span></td>
+                    <td>Ordered date : <span style="color:red">{{i.ordered_date}}</span></td>
+                    <td>Delivery status : <span style="color:red">{{i.delivery_status}}</span></td>
+
+                </tr>
+                {% endfor %}
+     </table>
+
+</div>
+
+{% endblock %}

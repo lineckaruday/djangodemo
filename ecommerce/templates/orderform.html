@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}              <!--always add load static after extends page---->
+
+{% block title%}
+Order Form
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h2 class="text-center text-dark">Enter the Details....</h2>
+
+<form method="POST">             <!-- in applic level form add method="POST" to send this form content to server -->
+                   <!--here enctype is for media content,uploading type sending , updating and all-->
+
+ {% csrf_token %}         <!--security feature used to send encrypted data from client side without getting manipulated  -->
+    <div class="mb-3">
+  <label  class="form-label">Address</label>
+  <input type="text" class="form-control" name="a"  placeholder="Your    Address">
+</div>                   <!--for each input type add name="t" used to retrieve value   -->
+
+    <div class="mb-3">
+  <label  class="form-label">Phone Number</label>
+  <input type="number" class="form-control" name="p"  placeholder="Your    number">
+</div>                                 <!--for each input type add name="t" used to retrieve value   -->
+
+    <div class="mb-3">
+  <label class="form-label">Account Number</label>
+  <input type="number" class="form-control" name="an"  placeholder="Your    Account number">
+</div>                       <!--for each input type add name="t" used to retrieve value   -->
+
+
+       <div class="mb-3">
+    <center>
+    <input type="submit"  class="btn btn-danger">
+    </center>
+    </div>
+
+ </form>
+</div>
+
+{% endblock %}

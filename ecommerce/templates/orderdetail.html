@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}              <!--always add load static after extends page---->
+
+{% block title%}
+Order Detail
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h3 class="text-center">{{message}}</h3>
+    <h4 class="text-center">Thank You...</h4>
+    <h5 class="text-center text-light"><a class="btn btn-primary" href="{% url 'shop:allcat' %}">Continue Shopping</a></h5>
+</div>
+
+{% endblock %}

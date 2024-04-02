@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%}
+Detail
+{% endblock %}
+
+{% block content %}
+
+  <div class="container   " style="height:600px; background-color:#92BBB8; color:white; ">
+
+    <div class="row mt-5">
+        <div class="col-4 me-2 pt-3 pb-4 " style="padding-left:100px" >
+                <img class="mt-5" src=" {{ p.image.url }}" height="400px" width="400px">
+
+        </div>
+
+         <div class="col-6 me-5 mt-5 pt-3" style="padding-left:100px; width:750px" >
+             <h3 style="color:black">{{p.name}}</h3>
+             <p>{{p.desc}}</p>
+             <h3 class="mt-2 " style="color:black;">{{p.price}} Rs</h3>
+             <h4 class="mt-2" style="color:black;">{{p.stock}} in stock hurry!</h4>
+
+
+             {% if user.is_superuser == True %}  <!--here checking multitple if inside this if ,if user is superuser then below work-->
+
+              {% if p.stock > 0 %}    <!--inside superuser if that product stock>0 then shows below-->
+             <h3 class="text-success">Product In Stock</h3>
+                 <a href="{% url 'admin:index' %}" class="btn btn-primary mt-5" style="width:300px ">Add Stock</a>
+
+             {% else %}    <!-- this else is above product if ,here else shows below-->
+             <h3 class="text-danger">Product Out Of Stock</h3>
+                 <a href="{% url 'admin:index' %}" class="btn btn-primary mt-5" style="width:300px ">Add Stock</a>
+              {% endif %}     <!--end if for above product if -->
+
+             {% else %}   <!--this else is above super user main if condition-->
+             {% if p.stock > 0 %}    <!--this is nested if ,here checks if product stock greater than zero then add to cart button shows or else-->
+                 <a href="{% url 'cart:addtocart'  p.id  %}" class="btn btn-primary mt-5" style="width:300px ">Add to cart</a>
+
+             {% else %}     <!--else it shows this below-->
+             <h3 class="text-danger">Out of Stock</h3>
+             {% endif %}     <!-- end if for above product if -->
+
+               {% endif %}    <!--main super user end if -->
+
+         </div>
+
+</div>
+
+  </div>
+
+{% endblock %}
